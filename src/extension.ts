@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
         terminal.sendText(`cp ./src/favicon.ico ./build/dev/favicon.ico`)
 
         if(SHOW_INFORMATION_MESSAGE) {
-            vscode.window.showInformationMessage('Пруга: project is build')
+            vscode.window.showInformationMessage('Пруга builder: project is build')
         }
         
     });
@@ -51,16 +51,16 @@ export function activate(context: vscode.ExtensionContext) {
                     // vscode.commands.executeCommand('vscode.previewHtml', `http://localhost/${path.basename(rootPath)}`, vscode.ViewColumn.Two)
                     // vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two)
                     .then(
-                        success => console.log(`Пруга executeCommand pruga.preview OK ${success}.`),
+                        success => console.log(`Пруга builder executeCommand pruga.preview OK ${success}.`),
                         // then error
-                        err => vscode.window.showErrorMessage(`Пруга executeCommand pruga.preview ERROR ${err}.`)
+                        err => vscode.window.showErrorMessage(`Пруга builder executeCommand pruga.preview ERROR ${err}.`)
                         )
                 }
             )
             .then(
                 () => {
                     if(SHOW_INFORMATION_MESSAGE) {
-                        vscode.window.showInformationMessage(`Пруга: project file is compiled`)
+                        vscode.window.showInformationMessage(`Пруга builder: project file is compiled`)
                     }
                 }
             )
