@@ -40,17 +40,18 @@ export function activate(context: vscode.ExtensionContext) {
                     terminal.sendText(`npm run compile-${document.languageId}`)
                 }
             )
-            /*.then(
+            .then(
                 () => {
-                    vscode.commands.executeCommand('vscode.previewHtml', `http://localhost/${path.basename(rootPath)}`, vscode.ViewColumn.Two)
+                    vscode.commands.executeCommand('pruga.preview', vscode.ViewColumn.Two)
+                    // vscode.commands.executeCommand('vscode.previewHtml', `http://localhost/${path.basename(rootPath)}`, vscode.ViewColumn.Two)
                     // vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two)
                     .then(
-                        s => console.log('Пруга конец.'),
+                        success => console.log(`Пруга executeCommand pruga.preview OK ${success}.`),
                         // then error
-                        vscode.window.showErrorMessage
+                        err => vscode.window.showErrorMessage(`Пруга executeCommand pruga.preview ERROR ${err}.`)
                         )
                 }
-            )*/
+            )
             .then(
                 () => vscode.window.showInformationMessage(`Пруга: project file is compiled`)
             )
