@@ -5,6 +5,8 @@ import * as vscode from 'vscode';
 
 let config = vscode.workspace.getConfiguration('pruga')
 
+const SHOW_INFORMATION_MESSAGE = config["showInformationMessage"] || false
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -28,7 +30,10 @@ export function activate(context: vscode.ExtensionContext) {
         terminal.sendText(`npm run compile-elm`)
         terminal.sendText(`cp ./src/favicon.ico ./build/dev/favicon.ico`)
 
-        vscode.window.showInformationMessage('Пруга: project is build');
+        if(SHOW_INFORMATION_MESSAGE) {
+            vscode.window.showInformationMessage('Пруга: project is build')
+        }
+        
     });
 
     let disposable_compile_file = vscode.commands.registerTextEditorCommand('pruga.compile', (editor, editorEdit) => {
@@ -53,7 +58,11 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             )
             .then(
-                () => vscode.window.showInformationMessage(`Пруга: project file is compiled`)
+                () => {
+                    if(SHOW_INFORMATION_MESSAGE) {
+                        vscode.window.showInformationMessage(`Пруга: project file is compiled`)
+                    }
+                }
             )
             
         
