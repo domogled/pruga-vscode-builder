@@ -3,7 +3,7 @@
     "displayName": "pruga-vscode-builder",
     "description": "extensible and configurable builder",
     "version": "0.0.1",
-    "publisher": "domogld",
+    "publisher": "domogled",
     "engines": {
         "vscode": "^1.5.0"
     },
@@ -11,14 +11,30 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Pruga configuration",
+            "properties": {
+                "pruga.buildPath": {
+                    "type": "string",
+                    "default": "build/dev",
+                    "description": "Set this relative path to web directory"
+                }
+            }
+        },
         "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+            "command": "pruga.compile",
+            "title": "pruga compile"
+        },
+        {
+            "command": "pruga.build",
+            "title": "pruga build all files"
+        }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
