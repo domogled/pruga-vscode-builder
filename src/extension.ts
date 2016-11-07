@@ -51,8 +51,11 @@ export function activate(context: vscode.ExtensionContext) {
                         )
                 }
             )*/
-
-        vscode.window.showInformationMessage(`Пруга: project file is compiled`);
+            .then(
+                () => vscode.window.showInformationMessage(`Пруга: project file is compiled`)
+            )
+            
+        
     });
 
     context.subscriptions.push(disposable_build_all);
