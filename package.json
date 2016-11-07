@@ -19,11 +19,6 @@
             "type": "object",
             "title": "Pruga configuration",
             "properties": {
-                "pruga.buildPath": {
-                    "type": "string",
-                    "default": "build/dev",
-                    "description": "Set this relative path to web directory"
-                },
                 "pruga.showInformationMessage": {
                     "type": "boolean",
                     "default": false,
