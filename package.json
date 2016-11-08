@@ -11,21 +11,10 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "workspaceContains:pruga.js"
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "configuration": {
-            "type": "object",
-            "title": "Pruga configuration",
-            "properties": {
-                "pruga.showInformationMessage": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Set true to showInformationMessage"
-                }
-            }
-        },
         "commands": [{
             "command": "pruga.compile",
             "title": "pruga compile"
