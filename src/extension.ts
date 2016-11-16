@@ -8,8 +8,6 @@ import * as path from 'path';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
     const rootPath = vscode.workspace.rootPath;
-    const config = require(path.join(rootPath, 'pruga.js'))
-    const SHOW_INFORMATION_MESSAGE = config["showInformationMessage"]
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
@@ -23,35 +21,43 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable_build_all = vscode.commands.registerCommand('pruga.build', () => {
-        terminal.sendText(config.builder.clean)
+        const config = vscode.workspace.getConfiguration('pruga')
+        const SHOW_INFO = `${config.get('showLevel')}` == "info"
 
-        const compile = config.builder.compile
+        // terminal.sendText(config.get('clean'))
+        terminal.sendText(`${config.get('clean')}`)
+
+        const compile = config.get('compile')
 
         for(let item in compile) {
             terminal.sendText(compile[item])
         }
 
-        const copy = config.builder.copy
+        const copy = config.get('copy.static')
 
         for(let item in copy) {
             terminal.sendText(copy[item])
         }
 
-        if(SHOW_INFORMATION_MESSAGE) {
+        if(SHOW_INFO) {
             vscode.window.showInformationMessage('Пруга builder: project is build')
         }
         
     });
 
     let disposable_compile_file = vscode.commands.registerTextEditorCommand('pruga.compile', (editor, editorEdit) => {
+        const config = vscode.workspace.getConfiguration('pruga')
         const document = editor.document
+
+        const SHOW_INFO = `${config.get('showLevel')}` == "info"
 
         document.save()
             .then(
                 () => {
-                    const command = config.builder.compile[document.languageId]
+                    const key = `compile.${document.languageId}`
+                    const command = config.get(key)
                     if(command) {
-                        terminal.sendText(command)
+                        terminal.sendText(`${command}`)
                     }
                     else{
                         vscode.window.showErrorMessage(`Command for ${document.languageId} is not defined.`)
@@ -71,7 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
             )
             .then(
                 () => {
-                    if(SHOW_INFORMATION_MESSAGE) {
+                    if(SHOW_INFO) {
                         vscode.window.showInformationMessage(`Пруга builder: project file is compiled`)
                     }
                 }
